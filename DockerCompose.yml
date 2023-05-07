@@ -1,0 +1,29 @@
+version: "3"
+  
+services:
+
+  web_app:
+    image: httpd:latest
+    deploy: 
+      replicas: 10
+      placement:
+        constraints:
+          - node.role==worker
+  
+  data_base:
+    image: redis:latest
+    deploy: 
+      replicas: 4
+      placement:
+        constraints:
+          - node.role==worker
+
+  data_base2:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: mypasswd
+    deploy: 
+      replicas: 1
+      placement:
+        constraints:
+          - node.role==worker
